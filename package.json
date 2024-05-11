@@ -18,12 +18,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-joi-validation": "^5.0.1",
-    "insta-scraper": "^1.0.2",
-    "instagram-scraping": "^1.0.17",
     "joi": "^17.13.1",
     "mongoose": "^8.3.3",
     "puppeteer": "^22.8.0",
-    "scrap_instagram_hashtag": "^1.0.2",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
