@@ -4,7 +4,7 @@
   "description": "scraping insta feeds, tags, profile, ...etc",
   "main": "./src/server.ts",
   "scripts": {
-    "start": "npx puppeteer browsers install chrome && nodemon ./src/server.ts",
+    "start": "node ./dist/server.js",
     "dev": "nodemon ./src/server.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
