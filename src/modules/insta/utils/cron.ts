@@ -6,7 +6,7 @@ const initInstaTagsScrapCron = () => {
     const interval = "*/5 * * * * *";
 
     cron.schedule(interval, async () => {
-        if (intervalCount > 1) return;
+        if (intervalCount === 1) return;
         intervalCount++;
         console.log('Scraping initialized...');
         await scrapeAndInsertLatestTaggedPosts();

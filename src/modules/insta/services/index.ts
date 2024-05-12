@@ -40,7 +40,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         page.setDefaultNavigationTimeout(0);
 
-        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: "domcontentloaded" });
+        await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
