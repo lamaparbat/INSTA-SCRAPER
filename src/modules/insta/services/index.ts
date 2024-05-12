@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import InstaTagsModel from '../models';
 import { INSTA_BASE_URL } from '../../../config';
 import { IMAGE_EXTENTSIONS } from '../../../shared/constants';
@@ -54,13 +54,15 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         console.log("Autofill completed")
         await Promise.all([
-            page.waitForNavigation(),
+            // page.waitForNavigation(),
             page.click('button[type="submit"]')
         ]);
 
+        console.log('login button clicked...')
         await page.goto(instaTargetUserTagsUrl);
         await page.waitForSelector('section');
 
+        console.log("Scraping started through dom manipulation...")
         const taggedPostUrls = await page.evaluate(() => {
             const imgGrid = document.querySelectorAll('div[style="display: flex; flex-direction: column; padding-bottom: 0px; padding-top: 0px; position: relative;"]');
             const imgUrls: object[] = [];
