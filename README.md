@@ -6,13 +6,16 @@ This Instagram Tagged Post Scraper is a powerful tool built with Express, Node.j
 
 - **Efficient Scraping:** Utilizes Puppeteer for efficient headless scraping.
 - **Flexible API:** Allows users to specify the target Instagram user ID as an API parameter.
+- **Custom Media Server:** Allows users to render insta tagged photos from our customer server instead of instagram server (Due to restriction and auth issues).
 - **Optional MongoDB Integration:** Users can optionally specify a MongoDB URL in .env of project to store fetched data directly into a MongoDB database.
 
 ## API Usage
 
 ### Request
 
-`GET /insta/tags?instaId=lamaDev`
+`GET /insta/tags?instaId=lamaDev`: Get instagram tagged photos by Instagram User Id.
+
+`GET /insta/media/:filename`: Get/Render single instagram tagged media by Filename.
 
 ### Parameters
 
