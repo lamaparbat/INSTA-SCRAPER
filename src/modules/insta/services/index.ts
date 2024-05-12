@@ -35,7 +35,15 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         if (!instaUsername || !instaPassword) return { data: null, error: "Username or password are empty!" };
 
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+                "--no-zygote",
+            ],
+            headless: true
+        });
         const page = await browser.newPage();
 
         page.setDefaultNavigationTimeout(0);
