@@ -43,7 +43,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
                 "--single-process",
                 "--no-zygote",
             ],
-            headless: false,
+            headless: true,
             executablePath: executablePath(),
         });
         const page = await browser.newPage();
@@ -56,7 +56,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         console.log("Autofill completed")
         await Promise.all([
-            // page.waitForNavigation(),
+            page.waitForNavigation(),
             page.click('button[type="submit"]')
         ]);
 
@@ -99,7 +99,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         allBUffer.forEach((buffer, i) => {
             if (!buffer?.data) return;
             const { filename } = payload?.[i];
-            let filePath = __dirname?.split("src")?.[0] + "assets/uploads";
+            let filePath = __dirname?.split("src")?.[0] + "/assets/uploads";
             filePath = path.join(filePath, filename);
             writeFileSync(filePath, buffer?.data);
         })
