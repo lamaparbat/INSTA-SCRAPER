@@ -31,10 +31,10 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         const instaPassword = process.env.INSTA_PASSWORD;
         const instaTargetUserTagsUrl = `${INSTA_BASE_URL}${instaId}/tagged/`;
 
-        console.log({ instaUsername, instaPassword, instaTargetUserTagsUrl, })
 
         if (!instaUsername || !instaPassword) return { data: null, error: "Username or password are empty!" };
 
+        console.log("Pass email password verificationi...")
         const browser = await puppeteer.launch({
             args: [
                 "--disable-setuid-sandbox",
@@ -46,13 +46,13 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         });
         const page = await browser.newPage();
 
-        page.setDefaultNavigationTimeout(0);
-
-        await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
+        console.log('goto url is working', INSTA_BASE_URL, page)
+        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: 'networkidle2' });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
 
+        console.log("Autofill completed")
         await Promise.all([
             page.waitForNavigation(),
             page.click('button[type="submit"]')
