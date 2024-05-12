@@ -5,4 +5,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-CMD [ "node", "./dist/server.js" ]
+RUN npm run build
+CMD [ "npm", "start" ]
