@@ -13,7 +13,9 @@ This Instagram Tagged Post Scraper is a powerful tool built with Express, Node.j
 
 ### Request
 
-`GET /insta/tags?instaId=lamaDev`
+`GET /insta/tags?instaId=lamaDev`: Get instagram tagged photos by Instagram User Id.
+
+`GET /insta/media/:filename`: Get/Render single instagram tagged media by Filename.
 
 ### Parameters
 
