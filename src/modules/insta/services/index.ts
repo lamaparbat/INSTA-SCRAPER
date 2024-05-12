@@ -24,15 +24,18 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
     try {
         const instaId = process.env.INSTA_TAGGED_USER_ID;
 
+        console.log({ instaId })
         if (!instaId) return { data: null, error: "Insta User Id is required!" };
 
         const instaUsername = process.env.INSTA_USERNAME;
         const instaPassword = process.env.INSTA_PASSWORD;
         const instaTargetUserTagsUrl = `${INSTA_BASE_URL}${instaId}/tagged/`;
 
+        console.log({ instaUsername, instaPassword, instaTargetUserTagsUrl, })
+
         if (!instaUsername || !instaPassword) return { data: null, error: "Username or password are empty!" };
 
-        const browser = await puppeteer.launch({ headless: false });
+        const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
 
         await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
@@ -63,6 +66,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         });
 
 
+        console.log(taggedPostUrls)
         const payload: any[] = [];
 
         const fileBuffer = taggedPostUrls?.map(async (d: any, i: number) => {
