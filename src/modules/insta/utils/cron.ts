@@ -2,9 +2,12 @@ import cron from "node-cron";
 import { scrapeAndInsertLatestTaggedPosts } from "../services";
 
 const initInstaTagsScrapCron = () => {
-    const interval = "*/30 * * * * *";
+    let intervalCount = 0;
+    const interval = "*/5 * * * * *";
 
     cron.schedule(interval, async () => {
+        if (intervalCount > 1) return;
+        intervalCount++;
         console.log('Scraping initialized...');
         await scrapeAndInsertLatestTaggedPosts();
         console.log('Scraping completed!!');
