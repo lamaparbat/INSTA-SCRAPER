@@ -1,0 +1,23 @@
+import fs, { access } from "fs";
+
+const getMediaByPath = async ({ filepath }: { filepath: string }) => {
+    try {
+        const fullPath = __dirname?.split("src")?.[0] + "assets/uploads/" + filepath;
+
+        return await new Promise((resolve, reject) => {
+            access(fullPath, fs.constants.F_OK, (err) => {
+                if (err) return reject({ data: null, error: err });
+
+                return resolve({ data: fullPath, error: null });
+            });
+        })
+    } catch (error: any) {
+        console.error(error);
+        return { data: null, error: error?.message };
+    }
+}
+
+
+export {
+    getMediaByPath,
+}

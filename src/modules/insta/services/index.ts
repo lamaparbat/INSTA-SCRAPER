@@ -1,6 +1,11 @@
 import puppeteer from 'puppeteer';
 import InstaTagsModel from '../models';
 import { INSTA_BASE_URL } from '../../../config';
+import { IMAGE_EXTENTSIONS } from '../../../shared/constants';
+import path from 'path';
+import axios from 'axios';
+import { writeFileSync } from 'fs';
+
 
 const getTaggedPosts = async ({ instaId }: { instaId: string }) => {
     try {
@@ -56,9 +61,34 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
             return imgUrls?.filter(Boolean) ?? [];
         });
-        const data = taggedPostUrls?.map(d => ({ ...d, userId: instaId }));
 
-        if (taggedPostUrls?.length > 0) await InstaTagsModel.create(data);
+
+        const payload: any[] = [];
+
+        const fileBuffer = taggedPostUrls?.map(async (d: any, i: number) => {
+            const url = d?.url;
+            const extension = IMAGE_EXTENTSIONS.find(extension => url.includes(extension));
+
+            const filename = `${instaId}${Date.now()}.${extension}`;
+            payload[i] = { instaUrl: d?.url, filename, link: d?.link, url: `${process.env.BASE_URL}media/${filename}`, userId: instaId };
+
+            return await axios.get(url, { responseType: 'arraybuffer' });
+        });
+
+        const allBUffer = await Promise.all(fileBuffer);
+
+
+        allBUffer.forEach((buffer, i) => {
+            if (!buffer?.data) return;
+            const { filename } = payload?.[i];
+            let filePath = __dirname?.split("src")?.[0] + "assets/uploads";
+            filePath = path.join(filePath, filename);
+            writeFileSync(filePath, buffer?.data);
+        })
+
+        console.log(allBUffer?.[0]?.data, payload)
+
+        if (payload?.length > 0) await InstaTagsModel.create(payload);
 
         await page.close();
         return { data: taggedPostUrls ?? [], error: null };
