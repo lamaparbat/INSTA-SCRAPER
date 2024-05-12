@@ -38,7 +38,9 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
 
-        await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
+        page.setDefaultNavigationTimeout(0);
+
+        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: "domcontentloaded" });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
