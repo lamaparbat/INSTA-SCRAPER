@@ -5,6 +5,7 @@ import { IMAGE_EXTENTSIONS } from '../../../shared/constants';
 import path from 'path';
 import axios from 'axios';
 import { writeFileSync } from 'fs';
+import { executablePath } from 'puppeteer';
 
 
 const getTaggedPosts = async ({ instaId }: { instaId: string }) => {
@@ -42,7 +43,8 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
                 "--single-process",
                 "--no-zygote",
             ],
-            headless: true
+            headless: false,
+            executablePath: executablePath(),
         });
         const page = await browser.newPage();
 
