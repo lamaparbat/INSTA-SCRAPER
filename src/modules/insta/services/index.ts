@@ -37,7 +37,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         const browser = await puppeteer.launch({
             headless: false,
             args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-            executablePath: '/usr/bin/chromium-browser'
+            executablePath: puppeteer.executablePath()
         });
         const page = await browser.newPage();
 
