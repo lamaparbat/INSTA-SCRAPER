@@ -36,6 +36,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         console.log("Pass email password verificationi...")
         const browser = await puppeteer.launch({
             headless: false,
+            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
             executablePath: '/usr/bin/chromium-browser'
         });
         const page = await browser.newPage();
