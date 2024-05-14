@@ -1,9 +1,9 @@
 import fs, { access } from "fs";
 
-console.log( __dirname?.split("INSTA-SCRAPING")?.[0] + "INSTA-SCRAPING/assets/uploads/")
+console.log( __dirname?.split("app")?.[0] + "app/assets/uploads/")
 const getMediaByPath = async ({ filepath }: { filepath: string }) => {
     try {
-        const fullPath = __dirname?.split("INSTA-SCRAPING")?.[0] + "INSTA-SCRAPING/assets/uploads/" + filepath;
+        const fullPath = __dirname?.split("app")?.[0] + "app/assets/uploads/" + filepath;
 
         return await new Promise((resolve, reject) => {
             access(fullPath, fs.constants.F_OK, (err) => {
