@@ -36,13 +36,13 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         console.log("Pass email password verificationi...")
         const browser = await puppeteer.launch({
             headless: false,
-            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-            executablePath: '/usr/bin/chromium-browser'
+            // args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+            // executablePath: '/usr/bin/chromium-browser'
         });
         const page = await browser.newPage();
 
         console.log('goto url is working', INSTA_BASE_URL, page)
-        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: 'networkidle2' });
+        await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
@@ -54,8 +54,10 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         ]);
 
         console.log('login button clicked...')
-        await page.goto(instaTargetUserTagsUrl);
+        await page.goto(instaTargetUserTagsUrl, { waitUntil: 'networkidle2' });
         await page.waitForSelector('section');
+        await page.waitForSelector('a');
+        await page.waitForSelector('img');
 
         console.log("Scraping started through dom manipulation...", instaTargetUserTagsUrl)
         const taggedPostUrls = await page.evaluate(() => {
