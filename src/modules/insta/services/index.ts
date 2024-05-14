@@ -1,12 +1,10 @@
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 import InstaTagsModel from '../models';
 import { INSTA_BASE_URL } from '../../../config';
 import { IMAGE_EXTENTSIONS } from '../../../shared/constants';
 import path from 'path';
 import axios from 'axios';
 import { writeFileSync } from 'fs';
-import { executablePath } from 'puppeteer';
-
 
 const getTaggedPosts = async ({ instaId }: { instaId: string }) => {
     try {
@@ -37,14 +35,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         console.log("Pass email password verificationi...")
         const browser = await puppeteer.launch({
-            args: [
-                "--disable-setuid-sandbox",
-                "--no-sandbox",
-                "--single-process",
-                "--no-zygote",
-            ],
-            headless: true,
-            executablePath: executablePath(),
+            headless: false,
         });
         const page = await browser.newPage();
 
@@ -64,9 +55,10 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         await page.goto(instaTargetUserTagsUrl);
         await page.waitForSelector('section');
 
-        console.log("Scraping started through dom manipulation...")
+        console.log("Scraping started through dom manipulation...", instaTargetUserTagsUrl)
         const taggedPostUrls = await page.evaluate(() => {
             const imgGrid = document.querySelectorAll('div[style="display: flex; flex-direction: column; padding-bottom: 0px; padding-top: 0px; position: relative;"]');
+            console.log("imgGrid", imgGrid);
             const imgUrls: object[] = [];
 
             imgGrid.forEach(div => {

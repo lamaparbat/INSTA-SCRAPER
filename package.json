@@ -2,10 +2,10 @@
   "name": "insta-scraping",
   "version": "1.0.0",
   "description": "scraping insta feeds, tags, profile, ...etc",
-  "main": "./src/server.ts",
+  "main": "server.ts",
   "scripts": {
-    "start": "node ./dist/server.js",
-    "dev": "nodemon ./src/server.ts",
+    "start": "nodemon server.ts",
+    "dev": "nodemon server.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,7 +23,6 @@
     "mongoose": "^8.3.4",
     "node-cron": "^3.0.3",
     "puppeteer": "^22.8.0",
-    "puppeteer-core": "^22.8.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
