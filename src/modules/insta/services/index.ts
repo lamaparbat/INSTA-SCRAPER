@@ -33,11 +33,16 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         if (!instaUsername || !instaPassword) return { data: null, error: "Username or password are empty!" };
 
-        console.log("Pass email password verificationi...")
+        console.log("Pass email password verificationi 1235.66..")
         const browser = await puppeteer.launch({
-            headless: false,
-            // args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-            // executablePath: '/usr/bin/chromium-browser'
+            headless: true,
+            executablePath: '/usr/bin/google-chrome',
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+            ]
         });
         const page = await browser.newPage();
 
