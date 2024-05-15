@@ -1,6 +1,5 @@
 import fs, { access } from "fs";
 
-console.log( __dirname?.split("app")?.[0] + "app/assets/uploads/")
 const getMediaByPath = async ({ filepath }: { filepath: string }) => {
     try {
         const fullPath = __dirname?.split("app")?.[0] + "app/assets/uploads/" + filepath;
