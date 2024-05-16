@@ -23,7 +23,6 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
     try {
         const instaId = process.env.INSTA_TAGGED_USER_ID;
 
-        console.log({ instaId })
         if (!instaId) return { data: null, error: "Insta User Id is required!" };
 
         const instaUsername = process.env.INSTA_USERNAME;
@@ -33,7 +32,6 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         if (!instaUsername || !instaPassword) return { data: null, error: "Username or password are empty!" };
 
-        console.log("Pass email password verificationi 1235.66..")
         const browser = await puppeteer.launch({
             headless: true,
             executablePath: '/usr/bin/google-chrome',
@@ -46,28 +44,27 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         });
         const page = await browser.newPage();
 
-        console.log('goto url is working', INSTA_BASE_URL, page)
+        console.log('Navigating to instragram homepage....');
         await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
 
-        console.log("Autofill completed")
+        console.log("Autofill completed!");
         await Promise.all([
             page.waitForNavigation(),
             page.click('button[type="submit"]')
         ]);
 
-        console.log('login button clicked...')
+        console.log('Login button triggered!');
         await page.goto(instaTargetUserTagsUrl, { waitUntil: 'networkidle2' });
         await page.waitForSelector('section');
         await page.waitForSelector('a');
         await page.waitForSelector('img');
 
-        console.log("Scraping started through dom manipulation...", instaTargetUserTagsUrl)
+        console.log("Dom Manipulatioin initialized!", instaTargetUserTagsUrl)
         const taggedPostUrls = await page.evaluate(() => {
             const imgGrid = document.querySelectorAll('div[style="display: flex; flex-direction: column; padding-bottom: 0px; padding-top: 0px; position: relative;"]');
-            console.log("imgGrid", imgGrid);
             const imgUrls: object[] = [];
 
             imgGrid.forEach(div => {
@@ -81,7 +78,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         });
 
 
-        console.log(taggedPostUrls)
+        console.log("Data Extraced SUccesfully!")
         const payload: any[] = [];
 
         const fileBuffer = taggedPostUrls?.map(async (d: any, i: number) => {
@@ -105,7 +102,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
             writeFileSync(filePath, buffer?.data);
         })
 
-        console.log(allBUffer?.[0]?.data, payload)
+        console.log("Final Output: ", payload);
 
         if (payload?.length > 0) await InstaTagsModel.create(payload);
 
