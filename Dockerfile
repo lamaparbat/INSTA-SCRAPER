@@ -28,10 +28,9 @@ COPY package*.json ./
 
 RUN npm install
 
-# Copy built files from the previous stage
-COPY --from=builder /usr/src/app/.env ./
+COPY --from=builder /usr/src/app/.env .
 COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app ./node_modules
 COPY --from=builder /usr/src/app/assets ./assets
 COPY --from=builder /usr/src/app/package*.json ./
 
