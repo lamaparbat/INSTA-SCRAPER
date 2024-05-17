@@ -3,7 +3,7 @@ import { scrapeAndInsertLatestTaggedPosts } from "../services";
 
 const initInstaTagsScrapCron = () => {
     let intervalCount = 0;
-    const interval = "0 */12 * * *";
+    const interval = "*/5 * * * * *";
 
     cron.schedule(interval, async () => {
         if (intervalCount === 1) return;

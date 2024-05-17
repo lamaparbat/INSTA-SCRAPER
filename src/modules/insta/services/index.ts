@@ -1,10 +1,11 @@
+import path from 'path';
+import axios from 'axios';
 import puppeteer from 'puppeteer';
+import { writeFileSync } from 'fs';
 import InstaTagsModel from '../models';
 import { INSTA_BASE_URL } from '../../../config';
 import { IMAGE_EXTENTSIONS } from '../../../shared/constants';
-import path from 'path';
-import axios from 'axios';
-import { writeFileSync } from 'fs';
+import { getRootDirectory } from '../../../shared/utils';
 
 const getTaggedPosts = async ({ instaId }: { instaId: string }) => {
     try {
@@ -94,10 +95,12 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         const allBUffer = await Promise.all(fileBuffer);
 
 
+        const rootDir = getRootDirectory();
         allBUffer.forEach((buffer, i) => {
             if (!buffer?.data) return;
             const { filename } = payload?.[i];
-            let filePath = __dirname?.split("src")?.[0] + "/assets/uploads";
+            let filePath = rootDir + "/assets/uploads";
+            console.log({filePath})
             filePath = path.join(filePath, filename);
             writeFileSync(filePath, buffer?.data);
         })

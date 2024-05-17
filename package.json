@@ -4,10 +4,10 @@
   "description": "scraping insta feeds, tags, profile, ...etc",
   "main": "server.ts",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon server.ts",
+    "start": "export NODE_ENV=production && node dist/server.js",
+    "dev": "export NODE_ENV=development && nodemon server.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "copyfiles": "copyfiles -u 1 assets/**/* dist/"
   },
   "author": "Parbat Lama",
   "license": "ISC",
@@ -21,15 +21,16 @@
     "mongoose": "^8.3.4",
     "node-cron": "^3.0.3",
     "puppeteer": "^22.8.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "copyfiles": "^2.4.1"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.8",
+    "@types/node-cron": "^3.0.11",
     "nodemon": "^3.1.0",
-    "typescript": "^5.4.5",
-    "@types/axios": "^0.14.0",
-    "@types/node-cron": "^3.0.11"
+    "typescript": "^5.4.5"
   }
 }
