@@ -28,7 +28,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY --from=builder /usr/src/app/.env . || echo /".env file not found, skipping."/
+COPY --from=builder /usr/src/app/.env .
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app ./node_modules
 COPY --from=builder /usr/src/app/assets ./assets
