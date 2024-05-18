@@ -27,7 +27,6 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY .env ./
 COPY assets ./assets/
-COPY node_modules ./node_modules/
 
 RUN npm install
 
