@@ -24,8 +24,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
-COPY package*.json ./
 COPY .env ./
+COPY package*.json ./
 COPY assets ./assets/
 
 RUN npm install
