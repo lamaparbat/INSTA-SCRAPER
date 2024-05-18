@@ -24,13 +24,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
-COPY .env ./
 COPY package*.json ./
-COPY assets ./assets/
 
 RUN npm install
 
 COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/assets ./assets
 COPY --from=builder /usr/src/app/ ./node_modules
 
 EXPOSE 8888
