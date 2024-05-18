@@ -26,6 +26,7 @@ RUN apt-get update && \
 WORKDIR /usr/src/app
 COPY package*.json ./
 
+RUN npm install --omit=dev
 
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/assets ./assets
