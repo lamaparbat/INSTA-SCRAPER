@@ -46,19 +46,19 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         const page = await browser.newPage();
 
         console.log('Navigating to instragram homepage....', INSTA_BASE_URL, instaUsername);
-        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: "domcontentloaded" });
+        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: "networkidle2" });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
 
         console.log("Autofill completed!");
         await Promise.all([
-            page.waitForNavigation({ timeout: 0, waitUntil: "domcontentloaded" }),
+            page.waitForNavigation({ timeout: 0, waitUntil: "networkidle2" }),
             page.click('button[type="submit"]')
         ]);
 
         console.log('Login button triggered!');
-        await page.goto(instaTargetUserTagsUrl, { timeout: 0, waitUntil: "domcontentloaded" });
+        await page.goto(instaTargetUserTagsUrl, { timeout: 0, waitUntil: "networkidle2" });
         await page.waitForSelector('section');
         await page.waitForSelector('a');
         await page.waitForSelector('img');
