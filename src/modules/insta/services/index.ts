@@ -53,7 +53,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
 
         console.log("Autofill completed!");
         await Promise.all([
-            page.waitForNavigation(),
+            page.waitForNavigation({ waitUntil: 'networkidle2' }),
             page.click('button[type="submit"]')
         ]);
 
