@@ -46,19 +46,19 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         const page = await browser.newPage();
 
         console.log('Navigating to instragram homepage....', INSTA_BASE_URL, instaUsername);
-        await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
+        await page.goto(INSTA_BASE_URL, { timeout: 0, waitUntil: "domcontentloaded" });
 
         await page.type('input[name="username"]', instaUsername);
         await page.type('input[name="password"]', instaPassword);
 
         console.log("Autofill completed!");
         await Promise.all([
-            page.waitForNavigation({ waitUntil: 'networkidle2' }),
+            page.waitForNavigation({ timeout: 0, waitUntil: "domcontentloaded" }),
             page.click('button[type="submit"]')
         ]);
 
         console.log('Login button triggered!');
-        await page.goto(instaTargetUserTagsUrl, { waitUntil: 'networkidle2' });
+        await page.goto(instaTargetUserTagsUrl, { timeout: 0, waitUntil: "domcontentloaded" });
         await page.waitForSelector('section');
         await page.waitForSelector('a');
         await page.waitForSelector('img');
@@ -100,7 +100,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
             if (!buffer?.data) return;
             const { filename } = payload?.[i];
             let filePath = rootDir + "/assets/uploads";
-            console.log({filePath})
+            console.log({ filePath })
             filePath = path.join(filePath, filename);
             writeFileSync(filePath, buffer?.data);
         })
