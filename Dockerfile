@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --omit=dev
 COPY . .
 RUN npm run build
 
@@ -26,7 +26,6 @@ RUN apt-get update && \
 WORKDIR /usr/src/app
 COPY package*.json ./
 
-RUN npm install
 
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/assets ./assets

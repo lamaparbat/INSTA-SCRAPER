@@ -45,7 +45,7 @@ const scrapeAndInsertLatestTaggedPosts = async () => {
         });
         const page = await browser.newPage();
 
-        console.log('Navigating to instragram homepage....');
+        console.log('Navigating to instragram homepage....', INSTA_BASE_URL, instaUsername);
         await page.goto(INSTA_BASE_URL, { waitUntil: 'networkidle2' });
 
         await page.type('input[name="username"]', instaUsername);
